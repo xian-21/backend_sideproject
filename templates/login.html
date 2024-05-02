@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+</head>
+<body>
+    <h3>首頁</h3>
+    <div>歡迎光臨</div>
+    <h3>登入</h3>
+    <form method="post" action="/">
+        <label for="user_id">user_id:</label>
+          <input type="text" id="user_id" name="user_id">
+        <br>
+        <label for="password">password:</label>
+          <input type="password" id="password" name="password">
+          <button type="submit">登入</button>
+    </form>
+    <button type="button">
+        <a href="/signup">註冊</a>
+    </button>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="flash-message">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+{% if current_user.is_authenticated %}
+<p>Hi {{ current_user.id }}!</p>
+<p>current_user = {{ current_user }}</p>
+{% endif %}
+</body>
+</html>
