@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員註冊</title>
+</head>
+<body>
+    <h3>會員註冊</h3>
+    <div>歡迎光臨</div>
+    <form id="signupForm" action="/signup" method='POST'>
+        信箱 <input type='text' name='email' /><br>
+        密碼 <input type='password' name='password' />
+        <button type="submit">註冊</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表單直接提交
+
+            var email = document.querySelector('input[name="email"]').value;
+            var password = document.querySelector('input[name="password"]').value;
+
+            var data = {
+                email: email,
+                password: password
+            };
+
+            // 使用Ajax發送資料到後端
+            fetch('/signup_req', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            // 先靠fetch把資料丟到後端並執行/signup_req，response 是signup.py /signup_req api的return
+            .then(response => {
+                // 解析 JSON 格式的回應
+                return response.json();
+            })
+            // 把response
+            .then(data => {
+                console.log(data,'data');
+                if (data.success === true){
+                    document.getElementById('message').innerText = '註冊成功';
+                    setTimeout(function() {
+                        window.location.href = '/'; // 假设登录页面的 URL 是 '/login'
+                    }, 1000); // 3000 毫秒等于三秒
+                } else {
+                    document.getElementById('message').innerText = '註冊失敗 信箱重複';
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        });
+    </script>
+</body>
+</html>

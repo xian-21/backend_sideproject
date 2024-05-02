@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+</head>
+<body>
+    <p>登入成功 {{ current_user.id }}!</p>
+    <form action="/logout" method="post">
+        <button type="submit">登出</button>
+    </form>
+    <a href="http://127.0.0.1:3000/crawler">加密貨幣價格提醒</a>
+</body>
+</html>
