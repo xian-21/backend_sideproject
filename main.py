@@ -3,7 +3,6 @@ from login_route import login_routes
 from index_route import index_routes
 from crawler_route import crawler_routes
 from logout import logout_route
-from flask_login import LoginManager
 from login_route import login_manager  # 假設您的 auth.py 和 main.py 在同一個目錄下
 from update_alert import update_route
 from signup import signup_route
@@ -25,5 +24,5 @@ app.register_blueprint(logout_route)
 
 if __name__ == '__main__':
     schedule_thread = Thread(target=schedule_task)
-    schedule_thread.start()
+    schedule_thread.start() 
     app.run(port=3000, debug=True)
