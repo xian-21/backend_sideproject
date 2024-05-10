@@ -88,7 +88,7 @@ def notify():
 
 
 def schedule_task():
-    schedule.every(1).minutes.do(notify)
+    schedule.every(5).minutes.do(notify)
     # 開始執行定時任務
     while True:
         schedule.run_pending()
