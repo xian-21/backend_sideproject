@@ -1,15 +1,18 @@
 from flask import Blueprint, request, render_template, flash
 from flask_login import login_required
 from pymongo.mongo_client import MongoClient
+import os
 
 crawler_routes = Blueprint('crawler_routes', __name__)
 
 # 資料庫連線
-client = MongoClient("mongodb+srv://a8979401551:q6S9BNqbUgwZTvmJ@cluster0.zeyfhie.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client_ = os.environ.get('DATABASE_URL')
+client = MongoClient(client_)
+client = MongoClient("mongodb+srv://a8979401551:kVUJDErEzB1Bl6lg@cluster0.zeyfhie.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client.crawler
 user_collection = db['user']
 
-# 其他爬蟲相關的路由和功能移至此
+
 
 @crawler_routes.route("/crawler", methods=['GET', 'POST'])
 @login_required

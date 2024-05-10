@@ -2,11 +2,13 @@ from flask import Blueprint, request, render_template, flash, redirect
 from flask_login import login_user, current_user, LoginManager, UserMixin
 from pymongo.mongo_client import MongoClient
 from werkzeug.security import check_password_hash
-
+import os
 
 
 # 資料庫連線
-client = MongoClient("mongodb+srv://a8979401551:q6S9BNqbUgwZTvmJ@cluster0.zeyfhie.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+client_ = os.environ.get('DATABASE_URL')
+client = MongoClient(client_)
+client = MongoClient("mongodb+srv://a8979401551:kVUJDErEzB1Bl6lg@cluster0.zeyfhie.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client.signup
 user_collection = db['user_data']
 cursor = user_collection.find({}, {'_id': 0, 'email': 1, 'password': 1})
@@ -19,14 +21,13 @@ login_routes = Blueprint('login_routes', __name__)
 
 
 login_manager = LoginManager()
-login_manager.login_view = "/"  # 设置登录视图，使用根路径作为登录页面
-login_manager.login_message = "請先登入！"  # 可选，自定义未登录提示消息
+login_manager.login_view = "/" 
+login_manager.login_message = "請先登入！"  
 
 
 class User(UserMixin):
     def __init__(self, user_id):
         self.id = user_id
-
     def get_id(self):
         return str(self.id)
 
@@ -60,8 +61,6 @@ def request_loader(request):
 
 
 
-
-# 其他功能和路由移至此
 
 @login_routes.route("/", methods=['GET', 'POST'])
 def login():
